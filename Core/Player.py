@@ -35,7 +35,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.x -= self.speed
 
     def jump(self):
-        if self.grounded:
+        if self.grounded and self.game.map.getblockfrompos([self.getmappos()[0], self.getmappos()[1]-1]) == "air" \
+                and self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]-1]) == "air":
             self.gravity = -5
             self.grounded = False
 
