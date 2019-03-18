@@ -7,7 +7,7 @@ from Core.Player import Player
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, mapdir):
         pygame.init()
 
         self.screen = pygame.display.set_mode((800, 480))
@@ -17,14 +17,15 @@ class Game:
             "GAUCHE": const.K_LEFT,
             "DROITE": const.K_RIGHT,
             "QUIT": const.K_ESCAPE,
-            "JUMP": const.K_UP
+            "JUMP": const.K_UP,
+            "DEBUG": const.K_d
         }
+        self.debug = False
 
         self.blocklist = ListBlockTypes()
-        self.blocklist.createbasicblocks()
+        self.blocklist.createblocks("maps/"+mapdir)
 
-        self.map = Map()
-        self.createmap()
+        self.map = Map(self, "maps/"+mapdir)
 
         self.player = Player(self)
         self.player_list = pygame.sprite.Group()
@@ -75,7 +76,3 @@ class Game:
         except pygame.error:
             self.done = False
 
-    def createmap(self):
-        for i in range(0, 26):
-            self.map.createblock(self.blocklist.get(0), [i, 10])
-        self.map.createblock(self.blocklist.get(0), [10, 9])
