@@ -54,5 +54,5 @@ class Player(pygame.sprite.Sprite):
         self.timegravity -= 1
 
         if self.game.map.getblockfrompos([self.getmappos()[0], self.getmappos()[1]+1]) != "air" \
-                or self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1] + 1]) != "air":
+                or self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]+1]) != "air":
             self.grounded = True
