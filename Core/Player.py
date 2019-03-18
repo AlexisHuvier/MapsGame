@@ -5,7 +5,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, game):
         super(Player, self).__init__()
         self.game = game
-        self.imagestr = "images/entities/player.png"
+        self.imagestr = "images/player.png"
         self.image = pygame.image.load(self.imagestr)
         self.rect = self.image.get_rect()
         self.rect.x = 10
