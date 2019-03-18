@@ -4,8 +4,15 @@ from Core.Block import Block
 
 
 class Map:
-    def __init__(self):
+    def __init__(self, game, directory):
+        self.game = game
+        self.directory = directory
         self.blocks = pygame.sprite.Group()
+
+        with open(directory+"/map.json", 'r') as f:
+            datas = json.load(f)
+        for i in datas["blocks"]:
+            self.createblock(self.game.blocklist.get(i["id"]), [i["x"], i["y"]])
 
     def createblock(self, typeblock, pos):
         block = Block(typeblock, pos)
