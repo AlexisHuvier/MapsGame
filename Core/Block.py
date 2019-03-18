@@ -1,4 +1,5 @@
 import pygame
+import json
 
 
 class BlockType:
@@ -27,9 +28,12 @@ class ListBlockTypes:
     def getall(self):
         return self.dico
 
-    def createbasicblocks(self):
-        block = BlockType("images/blocks/bloctest.png", "test", 0)
-        self.add(block)
+    def createblocks(self, dir):
+        with open(dir+"/blocks.json", 'r') as f:
+            datas = json.load(f)
+        for i in datas["types"]:
+            blocktype = BlockType(dir+"/"+i["image"], i["name"], i["id"])
+            self.add(blocktype)
 
 
 class Block(pygame.sprite.Sprite):
