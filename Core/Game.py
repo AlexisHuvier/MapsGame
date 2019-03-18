@@ -31,11 +31,9 @@ class Game:
         self.player_list = pygame.sprite.Group()
         self.player_list.add(self.player)
 
-        self.font = pygame.font.SysFont("monospace", 15)
-        self.playerpos = self.font.render(str(self.player.getmappos()[0])+" - "+str(self.player.getmappos()[1]), 1,
-                                          (255, 255, 0))
+        self.debugfont = pygame.font.SysFont("monospace", 15)
 
-        pygame.key.set_repeat(400, 30)
+        pygame.key.set_repeat(30, 30)
 
         self.launch()
 
@@ -58,6 +56,9 @@ class Game:
                 self.player.move(1)
             if event.key == self.controles["JUMP"]:
                 self.player.jump()
+        if event.type == const.KEYUP:
+            if event.key == self.controles["DEBUG"]:
+                self.debug = not self.debug
         if event.type == const.QUIT:
             self.done = False
 
@@ -68,11 +69,21 @@ class Game:
 
             self.map.blocks.draw(self.screen)
             self.player_list.draw(self.screen)
-            self.playerpos = self.font.render(str(self.player.getmappos()[0]) + " - " + str(self.player.getmappos()[1]),
-                                              1, (255, 255, 0))
-            self.screen.blit(self.playerpos, (10, 10))
+            if self.debug:
+                self.showdebug()
 
             pygame.display.update()
         except pygame.error:
             self.done = False
 
+    def showdebug(self):
+        text = [
+            "X : " + str(self.player.getmappos()[0]),
+            "Y : " + str(self.player.getmappos()[1]),
+            "Grounded : "+str(self.player.grounded)
+            ]
+        y = 10
+        for i in text:
+            textrendered = self.debugfont.render(i, 1, (255, 255, 0))
+            self.screen.blit(textrendered, (10, y))
+            y += 15
