@@ -4,7 +4,27 @@
         {
             "id":0,
             "name":"test",
-            "image":"blocks/bloc0.png"
+            "image":"blocks/bloc0.png",
+            "solid": true,
+            "behaviour":[]
+        },
+        {
+            "id":1,
+            "name":"test2",
+            "image":"blocks/bloc1.png",
+            "solid": false,
+            "behaviour": [
+                "winOnTouch"
+            ]
+        },
+        {
+            "id":2,
+            "name":"invisible",
+            "image":"blocks/bloc2.png",
+            "solid": true,
+            "behaviour": [
+                "looseOnTouch"
+            ]
         }
     ]
 }
