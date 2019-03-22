@@ -3,10 +3,11 @@ import json
 
 
 class BlockType:
-    def __init__(self, sprite, name, idblock):
+    def __init__(self, sprite, name, idblock, solid, behaviour):
         self.sprite = sprite
         self.name = name
         self.idblock = idblock
+        self.solid = solid
 
 
 class ListBlockTypes:

@@ -23,11 +23,11 @@ class Player(pygame.sprite.Sprite):
 
     def move(self, direction):
         if direction:
-            booldroite = self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]]) == "air"
+            booldroite = not self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]]).solid
             boolgauche = False
         else:
             booldroite = False
-            boolgauche = self.game.map.getblockfrompos(self.getmappos()) == "air"
+            boolgauche = not self.game.map.getblockfrompos(self.getmappos()).solid
 
         if booldroite:
             self.rect.x += self.speed
@@ -35,8 +35,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.x -= self.speed
 
     def jump(self):
-        if self.grounded and self.game.map.getblockfrompos([self.getmappos()[0], self.getmappos()[1]-1]) == "air" \
-                and self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]-1]) == "air":
+        if self.grounded and not self.game.map.getblockfrompos([self.getmappos()[0], self.getmappos()[1]-1]).solid \
+                and not self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]-1]).solid:
             self.gravity = -5
             self.grounded = False
 
@@ -54,8 +54,8 @@ class Player(pygame.sprite.Sprite):
             self.timegravity = 5
         self.timegravity -= 1
 
-        if self.game.map.getblockfrompos([self.getmappos()[0], self.getmappos()[1]+1]) != "air" \
-                or self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]+1]) != "air":
+        if self.game.map.getblockfrompos([self.getmappos()[0], self.getmappos()[1]+1]).solid \
+                or self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]+1]).solid:
             self.grounded = True
 
         if self.rect.y > 480:

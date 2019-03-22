@@ -2,6 +2,7 @@ import pygame
 import json
 
 from Core.Block import Block
+from Core.Block import BlockType
 
 
 class Map:
@@ -22,6 +23,6 @@ class Map:
     def getblockfrompos(self, pos):
         for i in self.blocks.sprites():
             if i.getpos()[0] == pos[0] and i.getpos()[1] == pos[1]:
-                return i.blocktype.name
-        return "air"
+                return i.blocktype
+        return BlockType("", "air", -1, False, [])
 
