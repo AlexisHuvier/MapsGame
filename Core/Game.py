@@ -1,5 +1,7 @@
 import pygame
 from pygame import locals as const
+from tkinter import Tk, Label, Button, StringVar, OptionMenu
+import os
 
 from Core.Map import Map
 from Core.Block import ListBlockTypes
@@ -87,3 +89,27 @@ class Game:
             textrendered = self.debugfont.render(i, 1, (255, 255, 0))
             self.screen.blit(textrendered, (10, y))
             y += 15
+class MainMenu:
+    def __init__(self):
+        self.fenetre = Tk()
+        self.fenetre.title("MapsGame")
+
+        titre = Label(self.fenetre, text="MapsGame")
+        listeoptions = os.listdir("maps")
+        self.v = StringVar()
+        self.v.set(listeoptions[0])
+        om = OptionMenu(self.fenetre, self.v, *listeoptions)
+        launchbutton = Button(self.fenetre, text="Jouer", command=self.launchgame)
+        exitbutton = Button(self.fenetre, text="Quitter", command=self.fenetre.destroy)
+
+        titre.pack(padx=10, pady=15)
+        om.pack(padx=10, pady=10)
+        launchbutton.pack(padx=10, pady=5)
+        exitbutton.pack(padx=10, pady=10)
+
+        self.fenetre.mainloop()
+
+    def launchgame(self):
+        self.fenetre.destroy()
+
+        Game(self.v.get())
