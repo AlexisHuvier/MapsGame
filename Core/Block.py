@@ -28,11 +28,11 @@ class ListBlockTypes:
     def getall(self):
         return self.dico
 
-    def createblocks(self, dir):
-        with open(dir+"/blocks.json", 'r') as f:
+    def createblocks(self, directory):
+        with open(directory + "/blocks.json", 'r') as f:
             datas = json.load(f)
         for i in datas["types"]:
-            blocktype = BlockType(dir+"/"+i["image"], i["name"], i["id"])
+            blocktype = BlockType(directory + "/" + i["image"], i["name"], i["id"], i["solid"], i["behaviour"])
             self.add(blocktype)
 
 
