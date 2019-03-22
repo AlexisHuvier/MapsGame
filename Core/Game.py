@@ -80,8 +80,8 @@ class Game:
 
     def showdebug(self):
         text = [
-            "X : " + str(self.player.getmappos()[0]),
-            "Y : " + str(self.player.getmappos()[1]),
+            "MapPos : " + str(self.player.getmappos()[0])+", "+str(self.player.getmappos()[1]),
+            "RealPos : " + str(self.player.getpos()[0])+", "+str(self.player.getpos()[1]),
             "Grounded : "+str(self.player.grounded)
             ]
         y = 10
