@@ -35,7 +35,7 @@ class Game:
 
         self.debugfont = pygame.font.SysFont("monospace", 15)
 
-        pygame.key.set_repeat(30, 30)
+        pygame.key.set_repeat(1, 1)
 
         self.launch()
 

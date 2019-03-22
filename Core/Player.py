@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = 10
         self.gravity = 5
         self.timegravity = 5
-        self.speed = 5
+        self.speed = 3
         self.grounded = False
 
     def getpos(self):
@@ -49,7 +49,7 @@ class Player(pygame.sprite.Sprite):
             self.gravity = 2
         self.grounded = False
 
-        if self.timegravity <= 0 and self.gravity != 5 and not self.grounded:
+        if self.timegravity <= 0 and self.gravity < 5 and not self.grounded:
             self.gravity += 1
             self.timegravity = 5
         self.timegravity -= 1
