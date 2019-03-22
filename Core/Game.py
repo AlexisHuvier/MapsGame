@@ -15,6 +15,7 @@ class Game:
         self.screen = pygame.display.set_mode((800, 480))
         self.clock = pygame.time.Clock()
         self.done = True
+        self.state = 0
         self.controles = {
             "GAUCHE": const.K_LEFT,
             "DROITE": const.K_RIGHT,
@@ -45,6 +46,8 @@ class Game:
                 self.process_event(event)
 
             self.player.update()
+            for i in self.map.blocks.sprites():
+                i.update(self)
             self.update()
         pygame.quit()
 
@@ -89,6 +92,16 @@ class Game:
             textrendered = self.debugfont.render(i, 1, (255, 255, 0))
             self.screen.blit(textrendered, (10, y))
             y += 15
+
+    def win(self):
+        self.done = False
+        self.state = 1
+
+    def loose(self):
+        self.done = False
+        self.state = 2
+
+
 class MainMenu:
     def __init__(self):
         self.fenetre = Tk()

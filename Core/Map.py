@@ -20,6 +20,11 @@ class Map:
         block = Block(typeblock, pos)
         self.blocks.add(block)
 
+    def deleteblock(self, pos):
+        for i in self.blocks.sprites():
+            if i.getpos()[0] == pos[0] and i.getpos()[1] == pos[1]:
+                self.blocks.remove(i)
+
     def getblockfrompos(self, pos):
         for i in self.blocks.sprites():
             if i.getpos()[0] == pos[0] and i.getpos()[1] == pos[1]:

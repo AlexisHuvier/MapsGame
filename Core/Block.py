@@ -8,6 +8,7 @@ class BlockType:
         self.name = name
         self.idblock = idblock
         self.solid = solid
+        self.behaviour = behaviour
 
 
 class ListBlockTypes:
@@ -56,3 +57,17 @@ class Block(pygame.sprite.Sprite):
 
     def getpos(self):
         return self.x, self.y
+
+    def update(self, game):
+        playertouching = False
+        playercollision = pygame.sprite.spritecollide(self, game.player_list, False, None)
+        if len(playercollision):
+            playertouching = True
+
+        for i in self.blocktype.behaviour:
+            if i == "breakOnTouch" and playertouching:
+                game.map.deleteblock(self.getpos())
+            if i == "winOnTouch" and playertouching:
+                game.win()
+            if i == "looseOnTouch" and playertouching:
+                game.loose()
