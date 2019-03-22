@@ -35,6 +35,7 @@ class Game:
         self.player_list.add(self.player)
 
         self.debugfont = pygame.font.SysFont("monospace", 15)
+        self.winfont = pygame.font.SysFont("monospace", 20)
 
         pygame.key.set_repeat(1, 1)
 
@@ -49,6 +50,19 @@ class Game:
             for i in self.map.blocks.sprites():
                 i.update(self)
             self.update()
+
+        if self.state != 0:
+            self.done = True
+            self.screen.fill((0, 0, 0))
+            if self.state == 1:
+                render = self.winfont.render("Bien joué", 1, (255, 255, 255))
+            else:
+                render = self.winfont.render("Dommage...", 1, (255, 255, 255))
+            self.screen.blit(render, (400, 240))
+            pygame.display.update()
+            while self.done:
+                for event in pygame.event.get():
+                    self.process_event(event)
         pygame.quit()
 
     def process_event(self, event):
