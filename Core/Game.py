@@ -65,6 +65,8 @@ class Game:
                     self.process_event(event)
         pygame.quit()
 
+        MainMenu()
+
     def process_event(self, event):
         if event.type == const.KEYDOWN:
             if event.key == self.controles["QUIT"]:
