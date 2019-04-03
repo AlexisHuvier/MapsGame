@@ -4,26 +4,35 @@
         {
             "id":0,
             "name":"test",
-            "image":"blocks/bloc0.png",
+            "sprites": [
+                "blocks/bloc0.png",
+                "blocks/bloc1.png"
+            ],
             "solid": true,
             "behaviour":[]
         },
         {
             "id":1,
             "name":"test2",
-            "image":"blocks/bloc1.png",
+            "sprites":[
+                "blocks/bloc1.png"
+            ],
             "solid": false,
             "behaviour": [
-                "winOnTouch"
+                "increaseScoreOnTouch",
+                "breakOnTouch"
             ]
         },
         {
             "id":2,
             "name":"invisible",
-            "image":"blocks/bloc2.png",
+            "sprites":[
+                "blocks/bloc2.png"
+            ],
             "solid": true,
             "behaviour": [
-                "looseOnTouch"
+                "decreaseScoreOnTouch",
+                "breakOnTouch"
             ]
         }
     ]

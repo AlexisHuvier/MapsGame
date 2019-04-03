@@ -13,7 +13,21 @@ class Player(pygame.sprite.Sprite):
         self.gravity = 5
         self.timegravity = 5
         self.speed = 3
+        self.score = 0
         self.grounded = False
+
+    def addscore(self, add):
+        if self.score + add >= self.game.map.scoretowin:
+            self.score = self.game.map.scoretowin
+            self.game.win()
+        else:
+            self.score += add
+
+    def removescore(self, remove):
+        if self.score-remove < 0:
+            self.score = 0
+        else:
+            self.score -= remove
 
     def getpos(self):
         return self.rect.x, self.rect.y
@@ -30,9 +44,15 @@ class Player(pygame.sprite.Sprite):
             boolgauche = not self.game.map.getblockfrompos(self.getmappos()).solid
 
         if booldroite:
-            self.rect.x += self.speed
+            if self.rect.x + self.speed >= 800 - 32:
+                self.rect.x = 800 - 32
+            else:
+                self.rect.x += self.speed
         if boolgauche:
-            self.rect.x -= self.speed
+            if self.rect.x - self.speed <= 0:
+                self.rect.x = 0
+            else:
+                self.rect.x -= self.speed
 
     def jump(self):
         if self.grounded and not self.game.map.getblockfrompos([self.getmappos()[0], self.getmappos()[1]-1]).solid \
@@ -59,4 +79,7 @@ class Player(pygame.sprite.Sprite):
             self.grounded = True
 
         if self.rect.y > 480:
-            self.rect.y = 0
+            if self.game.map.looseonfall:
+                self.game.loose()
+            else:
+                self.rect.y = 0

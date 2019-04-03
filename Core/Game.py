@@ -35,6 +35,7 @@ class Game:
         self.player_list.add(self.player)
 
         self.debugfont = pygame.font.SysFont("monospace", 15)
+        self.scorefont = pygame.font.SysFont("monospace", 17)
         self.winfont = pygame.font.SysFont("monospace", 20)
 
         pygame.key.set_repeat(1, 1)
@@ -59,6 +60,8 @@ class Game:
             else:
                 render = self.winfont.render("Dommage...", 1, (255, 255, 255))
             self.screen.blit(render, (400, 240))
+            score = self.winfont.render("Score : "+str(self.player.score), 1, (255, 255, 255))
+            self.screen.blit(score, (400, 265))
             pygame.display.update()
             while self.done:
                 for event in pygame.event.get():
@@ -90,6 +93,8 @@ class Game:
 
             self.map.blocks.draw(self.screen)
             self.player_list.draw(self.screen)
+            textrendered = self.scorefont.render("Score : "+str(self.player.score), 1, (255, 255, 255))
+            self.screen.blit(textrendered, (680, 10))
             if self.debug:
                 self.showdebug()
 
@@ -101,7 +106,13 @@ class Game:
         text = [
             "MapPos : " + str(self.player.getmappos()[0])+", "+str(self.player.getmappos()[1]),
             "RealPos : " + str(self.player.getpos()[0])+", "+str(self.player.getpos()[1]),
-            "Grounded : "+str(self.player.grounded)
+            "Grounded : "+str(self.player.grounded),
+            "Maps Infos : ",
+            "    - Name : "+str(self.map.name),
+            "    - Description : "+str(self.map.description),
+            "    - Author : "+str(self.map.author),
+            "    - LooseOnFall : "+str(self.map.looseonfall),
+            "    - ScoreToWin : "+str(self.map.scoretowin)
             ]
         y = 10
         for i in text:

@@ -13,6 +13,11 @@ class Map:
 
         with open(directory+"/map.json", 'r') as f:
             datas = json.load(f)
+        self.name = datas["name"]
+        self.description = datas["description"]
+        self.author = datas["author"]
+        self.scoretowin = int(datas["scoreToWin"])
+        self.looseonfall = bool(datas["looseOnFall"])
         for i in datas["blocks"]:
             self.createblock(self.game.blocklist.get(i["id"]), [i["x"], i["y"]])
 
