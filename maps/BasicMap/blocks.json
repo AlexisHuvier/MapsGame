@@ -1,20 +1,19 @@
 {
-    "types": 
-    [
+    "types": [
         {
-            "id":0,
-            "name":"test",
+            "id": 0,
+            "name": "test",
             "sprites": [
                 "blocks/bloc0.png",
                 "blocks/bloc1.png"
             ],
             "solid": true,
-            "behaviour":[]
+            "behaviour": []
         },
         {
-            "id":1,
-            "name":"test2",
-            "sprites":[
+            "id": 1,
+            "name": "test2",
+            "sprites": [
                 "blocks/bloc1.png"
             ],
             "solid": false,
@@ -24,9 +23,9 @@
             ]
         },
         {
-            "id":2,
-            "name":"invisible",
-            "sprites":[
+            "id": 2,
+            "name": "invisible",
+            "sprites": [
                 "blocks/bloc2.png"
             ],
             "solid": true,
