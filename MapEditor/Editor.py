@@ -1,5 +1,6 @@
 from tkinter import Tk, Label, Button
 
+from MapEditor.BlockTypesEditor import BlockTypesEditor
 
 
 class Editor:
@@ -35,6 +36,7 @@ class Editor:
 
     def editblockstypes(self):
         self.fenetre.destroy()
+        BlockTypesEditor(self.mapdir)
 
     def mainmenu(self):
         from Core.Game import MainMenu
