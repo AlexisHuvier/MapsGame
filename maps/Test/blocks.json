@@ -1,0 +1,33 @@
+{
+    "types": [
+        {
+            "id": 0,
+            "name": "block bleu",
+            "sprites": [
+                "blocks/bloc0.png"
+            ],
+            "solid": true,
+            "behaviour": [
+                "winOnTouch"
+            ]
+        },
+        {
+            "id": 1,
+            "name": "Block Orange",
+            "sprites": [
+                "blocks/bloc1.png"
+            ],
+            "solid": true,
+            "behaviour": []
+        },
+        {
+            "id": 2,
+            "name": "Block Non Solide",
+            "sprites": [
+                "blocks/bloc0.png"
+            ],
+            "solid": false,
+            "behaviour": []
+        }
+    ]
+}

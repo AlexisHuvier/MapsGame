@@ -1,9 +1,9 @@
 {
     "name": "BasicMap",
-    "description" : "Map de base",
-    "author" : "LavaPower",
-    "scoreToWin" : 2,
-    "looseOnFall" : false,
+    "description": "Map de base\n",
+    "author": "LavaPower",
+    "scoreToWin": -1,
+    "looseOnFall": false,
     "blocks": [
         {
             "id": 0,

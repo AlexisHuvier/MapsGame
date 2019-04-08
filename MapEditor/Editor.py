@@ -22,8 +22,8 @@ class Editor:
         blockstypesbutton = Button(self.fenetre, text="Editer les BlockTypes", font=fonts["other"],
                                    command=self.editblocktypes)
         mapinfosbutton = Button(self.fenetre, text="Editer les MapInfos", font=fonts["other"],
-        blocksbutton = Button(self.fenetre, text="Editer les Blocks", font=fonts["other"], command=self.fenetre.destroy)
                                 command=self.editmapinfos)
+        blocksbutton = Button(self.fenetre, text="Editer les Blocks", font=fonts["other"], command=self.editblocks)
         retourbutton = Button(self.fenetre, text="Retour Menu Principal", font=fonts["other"], command=self.mainmenu)
         quitterbutton = Button(self.fenetre, text="Quitter", font=fonts["other"], command=self.fenetre.destroy)
 
@@ -35,6 +35,10 @@ class Editor:
         quitterbutton.pack(padx=10, pady=10)
 
         self.fenetre.mainloop()
+
+    def editblocks(self):
+        self.fenetre.destroy()
+        BlocksEditor(self.mapdir)
 
     def editblocktypes(self):
         self.fenetre.destroy()
