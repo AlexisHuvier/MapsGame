@@ -89,6 +89,8 @@ class BlockTypesEditor:
         else:
             self.boutonframe.grid(row=9, column=0, columnspan=2, padx=10, pady=15)
 
+        self.fenetre.mainloop()
+
     def update(self, newvalue):
         newtype = self.blocktypes[int(newvalue)]
 

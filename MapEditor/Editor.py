@@ -1,6 +1,8 @@
 from tkinter import Tk, Label, Button
 
 from MapEditor.BlockTypesEditor import BlockTypesEditor
+from MapEditor.MapInfosEditor import MapInfosEditor
+from MapEditor.BlocksEditor.BlocksEditor import BlocksEditor
 
 
 class Editor:
@@ -18,7 +20,7 @@ class Editor:
 
         titre = Label(self.fenetre, text="Map : "+mapdir, font=fonts["title"])
         blockstypesbutton = Button(self.fenetre, text="Editer les BlockTypes", font=fonts["other"],
-                                   command=self.editblockstypes)
+                                   command=self.editblocktypes)
         mapinfosbutton = Button(self.fenetre, text="Editer les MapInfos", font=fonts["other"],
                                 command=self.fenetre.destroy)
         blocksbutton = Button(self.fenetre, text="Editer les Blocks", font=fonts["other"], command=self.fenetre.destroy)
@@ -34,7 +36,7 @@ class Editor:
 
         self.fenetre.mainloop()
 
-    def editblockstypes(self):
+    def editblocktypes(self):
         self.fenetre.destroy()
         BlockTypesEditor(self.mapdir)
 
