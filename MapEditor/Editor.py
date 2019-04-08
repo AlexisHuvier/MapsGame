@@ -22,8 +22,8 @@ class Editor:
         blockstypesbutton = Button(self.fenetre, text="Editer les BlockTypes", font=fonts["other"],
                                    command=self.editblocktypes)
         mapinfosbutton = Button(self.fenetre, text="Editer les MapInfos", font=fonts["other"],
-                                command=self.fenetre.destroy)
         blocksbutton = Button(self.fenetre, text="Editer les Blocks", font=fonts["other"], command=self.fenetre.destroy)
+                                command=self.editmapinfos)
         retourbutton = Button(self.fenetre, text="Retour Menu Principal", font=fonts["other"], command=self.mainmenu)
         quitterbutton = Button(self.fenetre, text="Quitter", font=fonts["other"], command=self.fenetre.destroy)
 
@@ -39,6 +39,10 @@ class Editor:
     def editblocktypes(self):
         self.fenetre.destroy()
         BlockTypesEditor(self.mapdir)
+
+    def editmapinfos(self):
+        self.fenetre.destroy()
+        MapInfosEditor(self.mapdir)
 
     def mainmenu(self):
         from Core.Game import MainMenu
