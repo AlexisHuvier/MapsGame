@@ -2,6 +2,8 @@ import pygame
 from pygame import locals as const
 import json
 from MapEditor.BlocksEditor.Block import Block, BlockType
+from tkinter import Tk
+from tkinter.messagebox import askyesno
 
 
 class BlocksEditor:
@@ -50,6 +52,10 @@ class BlocksEditor:
     def process_event(self, evt):
         if evt.type == const.QUIT:
             self.done = False
+            fen = Tk()
+            if askyesno("Sauvegarde", "Voulez-vous sauvegarder ?"):
+                self.savemap()
+            fen.destroy()
         if evt.type == const.MOUSEBUTTONDOWN:
             self.mouseevent(evt.button, evt.pos)
         if evt.type == const.MOUSEMOTION:
@@ -57,22 +63,24 @@ class BlocksEditor:
         if evt.type == const.KEYUP:
             self.keyevent(evt.key)
 
+    def savemap(self):
+        liste = []
+        for i in self.blocks:
+            liste.append({
+                "id": i.blocktype.idblock,
+                "x": i.x,
+                "y": i.y
+            })
+        with open("maps/"+self.mapdir+"/map.json") as f:
+            datas = json.load(f)
+        datas["blocks"] = liste
+
+        with open("maps/" + self.mapdir + "/map.json", "w") as f:
+            f.write(json.dumps(datas, indent=4))
+
     def keyevent(self, key):
         if key == const.K_s:
-            liste = []
-            for i in self.blocks:
-                liste.append({
-                    "id": i.blocktype.idblock,
-                    "x": i.x,
-                    "y": i.y
-                })
-            with open("maps/"+self.mapdir+"/map.json") as f:
-                datas = json.load(f)
-            datas["blocks"] = liste
-
-            with open("maps/" + self.mapdir + "/map.json", "w") as f:
-                f.write(json.dumps(datas, indent=4))
-            print("MAP SAVED")
+            self.savemap()
 
     def mouseevent(self, button, pos):
         if button == 1:

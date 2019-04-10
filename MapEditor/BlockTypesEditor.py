@@ -1,5 +1,7 @@
 from tkinter import Tk, Label, Button, OptionMenu, StringVar, Entry, Checkbutton, IntVar, Frame
 import json
+import os
+import glob
 
 from MapEditor.Utils.ListWithAdder import ListWithAdder
 
@@ -28,12 +30,16 @@ class BlockTypesEditor:
             [
                 "Lien du sprite",
                 "Sprite déjà utilisé",
-                "Ce sprite est déjà utilisé pour ce blocktype."
+                "Ce sprite est déjà utilisé pour ce blocktype.",
+                "Aucun sprite",
+                "Aucun sprite n'a été trouvé"
             ],
             [
                 "Nom du comportement",
                 "Comportement déjà utilisé",
-                "Ce comportement est déjà utilisé pour ce blocktype."
+                "Ce comportement est déjà utilisé pour ce blocktype.",
+                "Aucun comportement",
+                "Aucun comportement n'a été trouvé"
             ]
         ]
 
@@ -47,17 +53,36 @@ class BlockTypesEditor:
             self.namelabel = Label(self.fenetre, text="Name :", font=self.fonts["other"])
             self.nameentry = Entry(self.fenetre, font=self.fonts["other"], width=15)
             self.nameentry.insert(0, self.blocktypes[0]["name"])
+
+            temp = glob.glob("maps/"+mapdir+"/**/*.png", recursive=True)
+            sprites = []
+            for i in temp:
+                sprites.append("/".join(i.replace("\\", "/").split("/")[2:]))
             self.spritelabel = Label(self.fenetre, text="Sprites :", font=self.fonts["other"])
             self.spriteslist = ListWithAdder(self.fenetre, self.texts[0], self.fonts["other"],
-                                             self.blocktypes[0]["sprites"])
+                                             self.blocktypes[0]["sprites"], False, "single", "sprite",
+                                             sprites)
             self.solidstate = IntVar()
             self.solidentry = Checkbutton(self.fenetre, font=self.fonts["other"], text="Solide",
                                           variable=self.solidstate)
             if self.blocktypes[0]["solid"]:
                 self.solidentry.select()
+            behaviours = ["BreakOnTouch", "WinOnTouch", "LooseOnTouch", "IncreaseScoreOnTouch",
+                          "DecreaseScoreOnTouch", "IncreaseLifeOnTouch", "DecreaseLifeOnTouch"]
+            for i in os.listdir("maps/"+mapdir+"/Behaviours"):
+                if i != "__pycache__":
+                    behaviours.append(i.split(".")[0])
+
+            behavioursacc = []
+            for i in self.blocktypes[0]["behaviour"]["liste"]:
+                try:
+                    behaviours.append(i + " - " + str(self.blocktypes[0]["behaviour"][i]))
+                except KeyError:
+                    behaviours.append(i + " -  ")
             self.behaviourlabel = Label(self.fenetre, text="Comportements :", font=self.fonts["other"])
             self.behaviourlist = ListWithAdder(self.fenetre, self.texts[1], self.fonts["other"],
-                                               self.blocktypes[0]["behaviour"])
+                                               behavioursacc, False, "single"
+                                               , "behaviour", behaviours)
             self.boutonframe2 = Frame(self.fenetre)
             self.deletebutton = Button(self.boutonframe2, text="Supprimer", font=self.fonts["other"], command=self.delete)
             self.savebutton = Button(self.boutonframe2, text="Sauvegarder", font=self.fonts["other"], command=self.save)
@@ -97,7 +122,13 @@ class BlockTypesEditor:
         self.nameentry.delete(0, len(self.nameentry.get()))
         self.nameentry.insert(0, newtype["name"])
         self.spriteslist.updatelist(newtype["sprites"])
-        self.behaviourlist.updatelist(newtype["behaviour"])
+        behaviours = []
+        for i in newtype["behaviour"]["liste"]:
+            try:
+                behaviours.append(i+" - "+str(newtype["behaviour"][i]))
+            except KeyError:
+                behaviours.append(i + " -  ")
+        self.behaviourlist.updatelist(behaviours)
         if newtype["solid"]:
             self.solidentry.select()
         else:
@@ -120,7 +151,14 @@ class BlockTypesEditor:
             if i["id"] == idtoupdate:
                 i["name"] = self.nameentry.get()
                 i["sprites"] = self.spriteslist.getall()
-                i["behaviour"] = self.behaviourlist.getall()
+                i["behaviour"] = {}
+                behaviours = self.behaviourlist.getall()
+                temp = []
+                for j in behaviours:
+                    if len(j.split(" - ")) == 2 and j.split(" - ")[1] != "" and j.split(" - ")[1] != " ":
+                        i["behaviour"][j.split(" - ")[0]] = j.split(" - ")[1]
+                    temp.append(j.split(" - ")[0])
+                i["behaviour"]["liste"] = temp
                 i["solid"] = bool(self.solidstate.get())
         with open("maps/" + self.mapdir + "/blocks.json", 'w') as f:
             f.write(json.dumps({"types": self.blocktypes}, indent=4))
@@ -137,7 +175,9 @@ class BlockTypesEditor:
             "name": "Nom",
             "sprites": [""],
             "solid": True,
-            "behaviour": []
+            "behaviour": {
+                "liste": []
+            }
         })
         with open("maps/" + self.mapdir + "/blocks.json", 'w') as f:
             f.write(json.dumps({"types": self.blocktypes}, indent=4))
