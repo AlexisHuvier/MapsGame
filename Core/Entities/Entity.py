@@ -30,6 +30,15 @@ class Entity(pygame.sprite.Sprite):
 
     def cango(self, pos):
         gosprite = pygame.sprite.Sprite()
+        gosprite.rect = pygame.rect.Rect(pos[0], pos[1], self.image.get_width(), self.image.get_height())
+        collision = pygame.sprite.spritecollide(gosprite, self.game.map.blocks, False, None)
+        for i in collision:
+            if i.blocktype.solid:
+                return False
+        return True
+
+    def updatephysics(self):
+        if not self.grounded:
             if self.cango([self.rect.x, self.rect.y + self.gravity]):
                 self.rect.y += self.gravity
         elif self.gravity < 0:
@@ -41,6 +50,7 @@ class Entity(pygame.sprite.Sprite):
         self.grounded = False
         if not self.cango([self.rect.x, self.rect.y + self.gravity]):
             self.grounded = True
+
         if self.timegravity <= 0 and self.gravity < 5 and not self.grounded:
             self.gravity += 1
             self.timegravity = 5

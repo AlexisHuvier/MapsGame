@@ -31,26 +31,22 @@ class Player(Entity):
 
     def move(self, direction):
         if direction:
-            booldroite = not self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]]).solid
-            boolgauche = False
-        else:
-            booldroite = False
-            boolgauche = not self.game.map.getblockfrompos(self.getmappos()).solid
-
-        if booldroite:
             if self.rect.x + self.speed >= 800 - 32:
-                self.rect.x = 800 - 32
+                if self.cango([800-32, self.rect.y]):
+                    self.rect.x = 800 - 32
             else:
-                self.rect.x += self.speed
-        if boolgauche:
+                if self.cango([self.rect.x + self.speed, self.rect.y ]):
+                    self.rect.x += self.speed
+        elif not direction:
             if self.rect.x - self.speed <= 0:
-                self.rect.x = 0
+                if self.cango([0, self.rect.y]):
+                    self.rect.x = 0
             else:
-                self.rect.x -= self.speed
+                if self.cango([self.rect.x - self.speed, self.rect.y]):
+                    self.rect.x -= self.speed
 
     def jump(self):
-        if self.grounded and not self.game.map.getblockfrompos([self.getmappos()[0], self.getmappos()[1]-1]).solid \
-                and not self.game.map.getblockfrompos([self.getmappos()[0]+1, self.getmappos()[1]-1]).solid:
+        if self.grounded:
             self.gravity = -5
             self.grounded = False
 
@@ -62,3 +58,5 @@ class Player(Entity):
                 self.game.loose()
             else:
                 self.rect.y = 0
+
+        self.lifebar.updatepos(self.getpos())
