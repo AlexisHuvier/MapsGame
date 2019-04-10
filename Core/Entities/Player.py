@@ -7,9 +7,14 @@ class Player(Entity):
         super(Player, self).__init__(game, [10, 10], "images/player.png")
         self.speed = 3
         self.score = 0
+        self.life = 50
+        self.maxlife = 50
+        self.lifebar = LifeBar(game, [10, 10], [-10, -10], 50)
+        self.game.addentity(self.lifebar.lifeback)
+        self.game.addentity(self.lifebar.lifefront)
 
     def addscore(self, add):
-        if self.score + add >= self.game.map.scoretowin:
+        if self.score + add >= self.game.map.scoretowin >= 0:
             self.score = self.game.map.scoretowin
             self.game.win()
         else:
