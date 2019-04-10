@@ -1,20 +1,37 @@
 import pygame
 import json
+import importlib
+
+from Core.Behaviours import IncreaseLifeOnTouch, IncreaseScoreOnTouch, DecreaseLifeOnTouch, DecreaseScoreOnTouch
+from Core.Behaviours import BreakOnTouch, WinOnTouch, LooseOnTouch
 
 
 class BlockType:
-    def __init__(self, sprites, name, idblock, solid, behaviour):
+    def __init__(self, game, sprites, name, idblock, solid, behaviours):
+        self.game = game
         self.sprites = sprites
         self.nbsprites = len(sprites)
         self.name = name
         self.idblock = idblock
         self.solid = solid
-        self.behaviour = behaviour
+        self.behaviours = []
+        for i in behaviours["liste"]:
+            try:
+                behaviour = eval(i+"()")
+            except NameError:
+                lib = importlib.import_module("maps."+game.mapdir.replace("/", ".")+".Behaviours."+i)
+                behaviour = lib.behaviour
+            try:
+                behaviour.giveparam(game, behaviours[i])
+            except KeyError:
+                behaviour.giveparam(game, None)
+            self.behaviours.append(behaviour)
 
 
 class ListBlockTypes:
-    def __init__(self):
+    def __init__(self, game):
         self.dico = {}
+        self.game = game
 
     def add(self, blocktype):
         if blocktype.idblock in self.dico:
@@ -37,7 +54,7 @@ class ListBlockTypes:
         for i in datas["types"]:
             for j in range(len(i["sprites"])):
                 i["sprites"][j] = directory + "/" + i["sprites"][j]
-            blocktype = BlockType(i["sprites"], i["name"], i["id"], i["solid"], i["behaviour"])
+            blocktype = BlockType(self.game, i["sprites"], i["name"], i["id"], i["solid"], i["behaviour"])
             self.add(blocktype)
 
 
@@ -63,6 +80,9 @@ class Block(pygame.sprite.Sprite):
     def getpos(self):
         return self.x, self.y
 
+    def getrealpos(self):
+        return self.rect.x, self.rect.y
+
     def update(self, game):
         if self.timer <= 0:
             self.timer = 20
@@ -76,18 +96,11 @@ class Block(pygame.sprite.Sprite):
         self.timer -= 1
 
         playertouching = False
-        playercollision = pygame.sprite.spritecollide(self, game.player_list, False, None)
+        playergroup = pygame.sprite.Group()
+        playergroup.add(game.player)
+        playercollision = pygame.sprite.spritecollide(self, playergroup, False, None)
         if len(playercollision):
             playertouching = True
 
-        for i in self.blocktype.behaviour:
-            if i == "breakOnTouch" and playertouching:
-                game.map.deleteblock(self.getpos())
-            if i == "winOnTouch" and playertouching:
-                game.win()
-            if i == "looseOnTouch" and playertouching:
-                game.loose()
-            if i == "increaseScoreOnTouch" and playertouching:
-                game.player.addscore(1)
-            if i == "decreaseScoreOnTouch" and playertouching:
-                game.player.removescore(1)
+        for i in self.blocktype.behaviours:
+            i.run(playertouching, self)

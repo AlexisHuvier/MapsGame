@@ -34,5 +34,5 @@ class Map:
         for i in self.blocks.sprites():
             if i.getpos()[0] == pos[0] and i.getpos()[1] == pos[1]:
                 return i.blocktype
-        return BlockType("", "air", -1, False, [])
+        return BlockType(self.game, "", "air", -1, False, [])
 

@@ -15,6 +15,7 @@ from MapEditor.Editor import Editor
 class Game:
     def __init__(self, mapdir):
         pygame.init()
+        self.mapdir = mapdir
 
         self.screen = pygame.display.set_mode((800, 480))
         self.clock = pygame.time.Clock()
@@ -210,6 +211,8 @@ class MainMenu:
         else:
             self.namefen.destroy()
             os.mkdir("maps/"+mapdir)
+            os.mkdir("maps/"+mapdir+"/Behaviours")
+            os.mkdir("maps/"+mapdir+"/sprites")
             blocksjson = {
                 "types": []
             }
