@@ -7,7 +7,7 @@ import json
 
 from Core.Map import Map
 from Core.Block import ListBlockTypes
-from Core.Player import Player
+from Core.Entities.Player import Player
 
 from MapEditor.Editor import Editor
 
@@ -29,14 +29,15 @@ class Game:
         }
         self.debug = False
 
-        self.blocklist = ListBlockTypes()
+        self.entity_list = pygame.sprite.Group()
+        self.blocklist = ListBlockTypes(self)
+
+        self.player = Player(self)
+        self.entity_list.add(self.player)
+
         self.blocklist.createblocks("maps/"+mapdir)
 
         self.map = Map(self, "maps/"+mapdir)
-
-        self.player = Player(self)
-        self.player_list = pygame.sprite.Group()
-        self.player_list.add(self.player)
 
         self.debugfont = pygame.font.SysFont("monospace", 15)
         self.scorefont = pygame.font.SysFont("monospace", 17)
@@ -51,7 +52,8 @@ class Game:
             for event in pygame.event.get():
                 self.process_event(event)
 
-            self.player.update()
+            for i in self.entity_list:
+                i.update()
             for i in self.map.blocks.sprites():
                 i.update(self)
             self.update()
@@ -96,7 +98,7 @@ class Game:
             self.clock.tick(60)
 
             self.map.blocks.draw(self.screen)
-            self.player_list.draw(self.screen)
+            self.entity_list.draw(self.screen)
             textrendered = self.scorefont.render("Score : "+str(self.player.score), 1, (255, 255, 255))
             self.screen.blit(textrendered, (680, 10))
             if self.debug:
@@ -123,6 +125,9 @@ class Game:
             textrendered = self.debugfont.render(i, 1, (255, 255, 0))
             self.screen.blit(textrendered, (10, y))
             y += 15
+
+    def addentity(self, entity):
+        self.entity_list.add(entity)
 
     def win(self):
         self.done = False
