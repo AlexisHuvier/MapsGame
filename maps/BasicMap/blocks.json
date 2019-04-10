@@ -4,35 +4,43 @@
             "id": 0,
             "name": "test",
             "sprites": [
-                "blocks/bloc0.png",
-                "blocks/bloc1.png"
+                "sprites/bloc0.png",
+                "sprites/bloc1.png"
             ],
             "solid": true,
-            "behaviour": []
+            "behaviour": {
+                "liste": []
+            }
         },
         {
             "id": 1,
             "name": "test2",
             "sprites": [
-                "blocks/bloc1.png"
+                "sprites/bloc2.png"
             ],
             "solid": false,
-            "behaviour": [
-                "increaseScoreOnTouch",
-                "breakOnTouch"
-            ]
+            "behaviour": {
+                "liste": [
+                    "IncreaseSpeedOnTouch",
+                    "BreakOnTouch"
+                ],
+                "IncreaseSpeedOnTouch": 1
+            }
         },
         {
             "id": 2,
             "name": "invisible",
             "sprites": [
-                "blocks/bloc2.png"
+                "sprites/bloc1.png"
             ],
-            "solid": true,
-            "behaviour": [
-                "decreaseScoreOnTouch",
-                "breakOnTouch"
-            ]
+            "solid": false,
+            "behaviour": {
+                "IncreaseSpeedOnTouch": "1",
+                "liste": [
+                    "BreakOnTouch",
+                    "IncreaseSpeedOnTouch"
+                ]
+            }
         }
     ]
 }
