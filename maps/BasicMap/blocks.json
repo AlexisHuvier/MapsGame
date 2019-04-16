@@ -2,10 +2,9 @@
     "types": [
         {
             "id": 0,
-            "name": "test",
+            "name": "Solide",
             "sprites": [
-                "sprites/bloc0.png",
-                "sprites/bloc1.png"
+                "sprites/bloc0.png"
             ],
             "solid": true,
             "behaviour": {
@@ -14,31 +13,25 @@
         },
         {
             "id": 1,
-            "name": "test2",
+            "name": "PasSolide",
             "sprites": [
-                "sprites/bloc2.png"
+                "sprites/bloc0.png"
             ],
             "solid": false,
             "behaviour": {
-                "liste": [
-                    "IncreaseSpeedOnTouch",
-                    "BreakOnTouch"
-                ],
-                "IncreaseSpeedOnTouch": 1
+                "liste": []
             }
         },
         {
             "id": 2,
-            "name": "invisible",
+            "name": "Win",
             "sprites": [
                 "sprites/bloc1.png"
             ],
             "solid": false,
             "behaviour": {
-                "IncreaseSpeedOnTouch": "1",
                 "liste": [
-                    "BreakOnTouch",
-                    "IncreaseSpeedOnTouch"
+                    "WinOnTouch"
                 ]
             }
         }
