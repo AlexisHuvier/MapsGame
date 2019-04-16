@@ -22,7 +22,8 @@ class WinOnTouch(Behaviour):
         super(WinOnTouch, self).__init__()
 
     def run(self, playertouching, bloc):
-        self.game.win()
+        if playertouching:
+            self.game.win()
 
 
 class LooseOnTouch(Behaviour):
