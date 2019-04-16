@@ -212,7 +212,6 @@ class MainMenu:
             self.namefen.destroy()
             os.mkdir("maps/"+mapdir)
             os.mkdir("maps/"+mapdir+"/Behaviours")
-            os.mkdir("maps/"+mapdir+"/sprites")
             blocksjson = {
                 "types": []
             }
