@@ -60,7 +60,7 @@ class BlockTypesEditor:
                 sprites.append("/".join(i.replace("\\", "/").split("/")[2:]))
             self.spritelabel = Label(self.fenetre, text="Sprites :", font=self.fonts["other"])
             self.spriteslist = ListWithAdder(self.fenetre, self.texts[0], self.fonts["other"],
-                                             self.blocktypes[0]["sprites"], False, "single", "sprite",
+                                             self.blocktypes[0]["sprites"], False, "single", "sprites",
                                              sprites)
             self.solidstate = IntVar()
             self.solidentry = Checkbutton(self.fenetre, font=self.fonts["other"], text="Solide",
