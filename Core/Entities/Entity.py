@@ -38,10 +38,7 @@ class Entity(pygame.sprite.Sprite):
         return True
 
     def updatephysics(self):
-        if not self.grounded:
-            if self.cango([self.rect.x, self.rect.y + self.gravity]):
-                self.rect.y += self.gravity
-        elif self.gravity < 0:
+        if not self.grounded or self.gravity < 0:
             if self.cango([self.rect.x, self.rect.y + self.gravity]):
                 self.rect.y += self.gravity
         else:
