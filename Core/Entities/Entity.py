@@ -2,7 +2,7 @@ import pygame
 
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, game, pos, image, havephysics = True):
+    def __init__(self, game, pos, image, havephysics=True):
         super(Entity, self).__init__()
         self.game = game
         self.image = pygame.image.load(image)
