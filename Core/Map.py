@@ -3,6 +3,8 @@ import json
 from Core.Entities.Block import Block
 from Core.Entities.Block import BlockType
 
+from pyengine.Components import PositionComponent
+
 
 class Map:
     def __init__(self, game, directory, entitysystem):
@@ -26,12 +28,14 @@ class Map:
 
     def deleteblock(self, pos):
         for i in self.entitySystem.entities.sprites():
-            if i.getpos()[0] == pos[0] and i.getpos()[1] == pos[1]:
+            component = i.get_component(PositionComponent)
+            if component.get_position()[0] == pos[0] and component.get_position()[1] == pos[1]:
                 self.entitySystem.entities.remove(i)
 
     def getblockfrompos(self, pos):
         for i in self.entitySystem.entities.sprites():
-            if i.getpos()[0] == pos[0] and i.getpos()[1] == pos[1]:
+            component = i.get_component(PositionComponent)
+            if component.get_position()[0] == pos[0] and component.get_position()[1] == pos[1]:
                 return i.blocktype
         return BlockType(self.game, "", "air", -1, False, [])
 
