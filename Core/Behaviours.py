@@ -1,3 +1,6 @@
+from pyengine.Components import PositionComponent
+
+
 class Behaviour:
     def __init__(self):
         self.game = None
@@ -13,7 +16,7 @@ class BreakOnTouch(Behaviour):
         super(BreakOnTouch, self).__init__()
 
     def run(self, bloc):
-        self.game.map.deleteblock(bloc.getpos())
+        self.game.map.deleteblock(bloc.get_component(PositionComponent).get_position())
 
 
 class WinOnTouch(Behaviour):
@@ -37,7 +40,7 @@ class IncreaseScoreOnTouch(Behaviour):
         super(IncreaseScoreOnTouch, self).__init__()
 
     def run(self, bloc):
-        self.game.player.addscore(int(self.value))
+        self.game.player.update_score(self.game.player.score + int(self.value))
 
 
 class DecreaseScoreOnTouch(Behaviour):
@@ -45,7 +48,7 @@ class DecreaseScoreOnTouch(Behaviour):
         super(DecreaseScoreOnTouch, self).__init__()
 
     def run(self, bloc):
-        self.game.player.removescore(int(self.value))
+        self.game.player.update_score(self.game.player.score - int(self.value))
 
 
 class IncreaseLifeOnTouch(Behaviour):
@@ -53,7 +56,7 @@ class IncreaseLifeOnTouch(Behaviour):
         super(IncreaseLifeOnTouch, self).__init__()
 
     def run(self, bloc):
-        self.game.player.updatelife(self.game.player.life + int(self.value))
+        self.game.player.update_life(self.game.player.life + int(self.value))
 
 
 class DecreaseLifeOnTouch(Behaviour):
@@ -61,5 +64,5 @@ class DecreaseLifeOnTouch(Behaviour):
         super(DecreaseLifeOnTouch, self).__init__()
 
     def run(self, bloc):
-        self.game.player.updatelife(self.game.player.life - int(self.value))
+        self.game.player.update_life(self.game.player.life - int(self.value))
 

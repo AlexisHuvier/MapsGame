@@ -21,7 +21,7 @@ class Game:
         self.game.set_world(self.world)
 
         self.entitySystem = self.world.get_system(EntitySystem)
-        self.player = Player(self.entitySystem)
+        self.player = Player(self)
         self.entitySystem.add_entity(self.player)
 
         self.blocklist = ListBlockTypes(self)
