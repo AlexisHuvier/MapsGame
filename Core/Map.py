@@ -1,15 +1,14 @@
-import pygame
 import json
 
-from Core.Block import Block
-from Core.Block import BlockType
+from Core.Entities.Block import Block
+from Core.Entities.Block import BlockType
 
 
 class Map:
-    def __init__(self, game, directory):
+    def __init__(self, game, directory, entitysystem):
         self.game = game
         self.directory = directory
-        self.blocks = pygame.sprite.Group()
+        self.entitySystem = entitysystem
 
         with open(directory+"/map.json", 'r') as f:
             datas = json.load(f)
@@ -23,15 +22,15 @@ class Map:
 
     def createblock(self, typeblock, pos):
         block = Block(typeblock, pos)
-        self.blocks.add(block)
+        self.entitySystem.add_entity(block)
 
     def deleteblock(self, pos):
-        for i in self.blocks.sprites():
+        for i in self.entitySystem.entities.sprites():
             if i.getpos()[0] == pos[0] and i.getpos()[1] == pos[1]:
-                self.blocks.remove(i)
+                self.entitySystem.entities.remove(i)
 
     def getblockfrompos(self, pos):
-        for i in self.blocks.sprites():
+        for i in self.entitySystem.entities.sprites():
             if i.getpos()[0] == pos[0] and i.getpos()[1] == pos[1]:
                 return i.blocktype
         return BlockType(self.game, "", "air", -1, False, [])

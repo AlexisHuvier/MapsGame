@@ -1,4 +1,5 @@
-import pygame
+from pyengine import Entity
+from pyengine.Components import PositionComponent, SpriteComponent, PhysicsComponent
 import json
 import importlib
 
@@ -58,49 +59,15 @@ class ListBlockTypes:
             self.add(blocktype)
 
 
-class Block(pygame.sprite.Sprite):
+class Block(Entity):
     def __init__(self, blocktype, pos):
         super(Block, self).__init__()
         self.blocktype = blocktype
+        self.pos = [pos[0]*32, pos[1]*32]
         self.sprite = 0
-        self.image = pygame.image.load(self.blocktype.sprites[self.sprite])
         self.timer = 20
-        self.rect = self.image.get_rect()
-        self.x = pos[0]
-        self.y = pos[1]
-        self.rect.x = self.x * 32
-        self.rect.y = self.y * 32
+        self.add_components(PositionComponent, self.pos)
+        self.add_components(SpriteComponent, self.blocktype.sprites[0])
+        if blocktype.solid:
+            self.add_components(PhysicsComponent, False)
 
-    def setpos(self, pos):
-        self.x = pos[0]
-        self.y = pos[1]
-        self.rect.x = self.x * 32
-        self.rect.y = self.y * 32
-
-    def getpos(self):
-        return self.x, self.y
-
-    def getrealpos(self):
-        return self.rect.x, self.rect.y
-
-    def update(self, game):
-        if self.timer <= 0:
-            self.timer = 20
-            self.sprite += 1
-            if self.sprite == self.blocktype.nbsprites:
-                self.sprite = 0
-            self.image = pygame.image.load(self.blocktype.sprites[self.sprite])
-            self.rect = self.image.get_rect()
-            self.rect.x = self.x * 32
-            self.rect.y = self.y * 32
-        self.timer -= 1
-
-        playertouching = False
-        playergroup = pygame.sprite.Group()
-        playergroup.add(game.player)
-        playercollision = pygame.sprite.spritecollide(self, playergroup, False, None)
-        if len(playercollision):
-            playertouching = True
-
-        for i in self.blocktype.behaviours:
-            i.run(playertouching, self)

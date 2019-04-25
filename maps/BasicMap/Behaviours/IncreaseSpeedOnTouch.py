@@ -5,9 +5,8 @@ class IncreaseSpeedOnTouch(Behaviour):
     def __init__(self):
         super(IncreaseSpeedOnTouch, self).__init__()
 
-    def run(self, playertouching, bloc):
-        if playertouching:
-            self.game.player.speed += int(self.value)
+    def run(self, bloc):
+        self.game.player.speed += int(self.value)
 
 
 behaviour = IncreaseSpeedOnTouch()

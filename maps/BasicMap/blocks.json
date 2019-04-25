@@ -28,7 +28,7 @@
             "sprites": [
                 "sprites/bloc1.png"
             ],
-            "solid": false,
+            "solid": true,
             "behaviour": {
                 "liste": [
                     "WinOnTouch"
