@@ -9,7 +9,7 @@ class Player(Entity):
     def __init__(self, game):
         super(Player, self).__init__()
         self.game = game
-        self.entitySystem = self.game.entitysystem
+        self.entitySystem = self.game.entitySystem
         self.add_components(PositionComponent, [0, 0])
         self.add_components(SpriteComponent, "images/player.png")
         self.add_components(PhysicsComponent)
