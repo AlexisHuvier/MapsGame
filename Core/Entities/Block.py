@@ -46,8 +46,7 @@ class ListBlockTypes:
                 return v
         print("ERREUR : Il n'existe pas de bloc à l'id", idblock)
 
-    def getall(self):
-        return self.dico
+    getall = lambda : return self.dico
 
     def createblocks(self, directory):
         with open(directory + "/blocks.json", 'r') as f:
