@@ -1,10 +1,13 @@
 {
-    "name": "BasicMap",
-    "description": "Map de base\n\n\n\n",
-    "author": "LavaPower",
     "scoreToWin": -1,
     "looseOnFall": true,
-    "blocks": [
+    "player": {
+        "sprite": "default",
+        "x": 0,
+        "y": 0
+    },
+    "blocks":
+    [
         {
             "id": 0,
             "x": 1,
