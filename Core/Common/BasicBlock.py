@@ -6,7 +6,7 @@ from random import randint
 import os
 
 
-class BlockType:
+class BasicBlockType:
     def __init__(self, directory, sprites, name, idblock, solid):
         self.sprites = sprites
         self.name = name

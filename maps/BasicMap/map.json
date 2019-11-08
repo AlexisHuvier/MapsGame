@@ -1,6 +1,6 @@
 {
     "scoreToWin": -1,
-    "looseOnFall": true,
+    "looseOnFall": false,
     "player": {
         "sprite": "default",
         "x": 0,

@@ -11,3 +11,10 @@ class Game(World):
 
     def setup(self, directory):
         self.map = Map(self, directory)
+
+    def outofwindow(self, entity, pos):
+        if entity == self.map.player:
+            if self.map.loose_fall:
+                self.window.set_world(0)
+            else:
+                self.map.reset_player()

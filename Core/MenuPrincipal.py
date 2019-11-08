@@ -1,7 +1,9 @@
 from pyengine2 import World
 
-from pyengine2.Widgets import Label, Button, Entry
-from pyengine2.Utils import Font, Color
+from pyengine2.Widgets import Label, Button, Selector
+from pyengine2.Utils import Font
+
+import os
 
 
 class MenuPrincipal(World):
@@ -12,8 +14,9 @@ class MenuPrincipal(World):
         title_size = title_font.rendered_size("MapsGame")
         self.title = Label(window.width / 2 - title_size[0] / 2, 40, "MapsGame", title_font)
 
-        self.map_name = Entry(window.width / 2 - 100, 200, font=Font(color=Color.from_name("BLACK"), size=18))
-        self.map_name.text = "BasicMap"
+        maps = os.listdir("maps")
+        self.map_name = Selector(window.width / 2, 200, *maps)
+        self.map_name.x = window.width / 2 - self.map_name.render.get_rect().width / 2
         self.map_name.update_render()
 
         self.edit = Button(window.width / 3 - 50, 300, "Editer", lambda: print())
@@ -25,6 +28,5 @@ class MenuPrincipal(World):
         self.ui_system.add_widget(self.play)
 
     def play_fnc(self):
-        if len(self.map_name.text):
-            self.window.worlds[1].setup(self.map_name.text)
-            self.window.set_world(1)
+        self.window.worlds[1].setup(self.map_name.texts[self.map_name.current])
+        self.window.set_world(1)
